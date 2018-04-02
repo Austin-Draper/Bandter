@@ -1,0 +1,45 @@
+{
+	"type": "Collection",
+	"properties": {
+		"user": {
+			"name": "user",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "user",
+			"order": 0
+		},
+		"rating": {
+			"name": "rating",
+			"type": "number",
+			"typeLabel": "number",
+			"required": false,
+			"id": "rating",
+			"order": 1
+		},
+		"comment": {
+			"name": "comment",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "comment",
+			"order": 2
+		},
+		"datetime": {
+			"name": "datetime",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "datetime",
+			"order": 3
+		},
+		"showID": {
+			"name": "showID",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "showID",
+			"order": 4
+		}
+	}
+}

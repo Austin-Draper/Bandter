@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Bandter login form</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+  <style type="text/css">
+    body {
+      background: #5bc0de !important;
+    }
+  </style>
+  <style type="text/css">
+    body h1 {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1><strong>Login</strong></h1>
+    <form>
+      <label for="username" class="text-dark"><strong><u>Username:</u></strong></label>
+      <input type="text" id="username" />
+      <label for="password"><strong><u>Password:</u></strong></label>
+      <input type="password" id="password" /><br />
+      <button type="submit" class="btn btn-primary"><strong>Login</strong></button>
+      <a href="/register.html" class="btn btn-default"><strong>Sign Up</strong></a>
+    </form>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js" charset="utf-8"></script>
+  <script type="text/javascript" src="/dpd.js"></script>
+  <script type="text/javascript">
+    dpd.users.me(function(user) {
+      if (user) {
+        location.href = "/homepage.html";
+      }
+    });
+
+    $("form").submit(function() {
+      var username = $("#username").val();
+      var password = $("#password").val();
+
+      dpd.users.login({
+        username: username,
+        password: password
+      }, function(session, error) {
+        if (error) {
+          alert(error.message);
+        } else {
+          location.href = "/homepage.html";
+        }
+      });
+
+      return false;
+    });
+  </script>
+</body>
+
+</html>

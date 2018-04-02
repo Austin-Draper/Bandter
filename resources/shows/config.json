@@ -1,0 +1,45 @@
+{
+	"type": "Collection",
+	"properties": {
+		"showName": {
+			"name": "showName",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "showName",
+			"order": 0
+		},
+		"bandsPlaying": {
+			"name": "bandsPlaying",
+			"type": "array",
+			"typeLabel": "array",
+			"required": true,
+			"id": "bandsPlaying",
+			"order": 1
+		},
+		"location": {
+			"name": "location",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "location",
+			"order": 2
+		},
+		"date": {
+			"name": "date",
+			"type": "date",
+			"typeLabel": "date",
+			"required": true,
+			"id": "date",
+			"order": 3
+		},
+		"imageURL": {
+			"name": "imageURL",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "imageURL",
+			"order": 4
+		}
+	}
+}

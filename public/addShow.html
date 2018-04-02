@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Bandter | Add Show</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <div class="container-fluid" id="navbar">
+  </div>
+
+  <div class="container">
+    <h1>Add Show</h1>
+    <form>
+      <div class="form-group">
+        <label for="showName">Show Name</label>
+        <input type="text" class="form-control" id="showName" placeholder="Show Name" required>
+      </div>
+      <div class="form-group">
+        <label for="bands">Bands Playing</label>
+        <input type="text" class="form-control" id="bands" aria-describedby="bandsPlayingHelp" placeholder="Bands playing" required>
+        <small id="bandsPlayingHelp" class="form-text text-muted">Separate each band with a comma.</small>
+      </div>
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" class="form-control" id="location" placeholder="Location" required>
+      </div>
+      <div class="form-group">
+        <label for="dateTime">Date and Time</label>
+        <input type="datetime-local" class="form-control" id="dateTime" placeholder="mm/dd/yyyy, --:-- --" required>
+      </div>
+      <div class="form-group">
+        <label for="imageURL">Image URL</label>
+        <input type="text" class="form-control" id="imageURL" aria-describedby="imageURLHelp" placeholder="https://www.imagesite.com/myphoto">
+        <small id="imageURLHelp" class="form-text text-muted">Enter the URL to an image that will represent the show.</small>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+  <script type="text/javascript" src="/dpd.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    // set the correct nav button as active
+    $(function() {
+      $("#navbar").load("nav.html", function() {
+        $("#addShowNav").addClass('active');
+      });
+    });
+
+    $("form").submit(function() {
+      var showName = $("#showName").val();
+      var bandsPlaying = $("#bands").val().split(",");
+      var location = $("#location").val();
+      var date = $("#dateTime").val();
+      var imageURL = $("#imageURL").val();
+
+      dpd.shows.post({
+        "showName": showName,
+        "bandsPlaying": bandsPlaying,
+        "location": location,
+        "date": date,
+        "imageURL": imageURL
+      }, function(result, err) {
+        if (err) return console.log(err);
+        console.log(result, result.id);
+      });
+    });
+
+
+    //todo on submit should navigate to the display show page
+  </script>
+</body>
+
+</html>
