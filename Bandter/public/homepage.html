@@ -12,22 +12,28 @@
   <div class="container-fluid" id="navbar">
   </div>
 
+  <!-- Just a small message to make it look like a homepage vs just being the image slider -->
+  <div class="welcome-message">
+    <h1>Welcome to Bandter!</h1>
+  </div>
+  <div class="instruct-message">
+    <p>This is a site where bands can solicit feedback on recent shows.</p>
+    <p>Shown below are some feautured shows you can give feedback on.</p>
+    <p>Don't see a certain show? Don't worry, check out <a href="browseShows.html">Browse Shows</a> to see if it's listed there.</p>
+    <p>Otherwise, you can add a show by clicking <a href="addShow.html">Add Show</a>. We'll get around to adding it ASAP!</p>
+  </div>
+
+  <!-- Entire container holding the carousel and the title -->
   <div class="container featured-shows-div">
 
     <h4>Featured Shows</h4>
 
     <div id="featuredShowsCarousel" class="carousel slide featured-shows" data-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <a href="#"><img class="d-block w-100" src="img/featured1.jpg" alt="Featured Show One"></a>
-        </div>
-        <div class="carousel-item">
-          <a href="#"><img class="d-block w-100" src="img/featured2.jpg" alt="Featured Show Two"></a>
-        </div>
-        <div class="carousel-item">
-          <a href="#"><img class="d-block w-100" src="img/featured3.jpg" alt="Featured Show Three"></a>
-        </div>
+      <div class="carousel-inner" id="inner">
+        <!-- javascript generated code goes here
+        it will load images from the deployd database -->
       </div>
+
       <a class="carousel-control-prev" href="#featuredShowsCarousel" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
@@ -38,6 +44,8 @@
       </a>
     </div>
   </div>
+
+  <div id="test"></div>
 
   <script type="text/javascript" src="/dpd.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -70,6 +78,33 @@
       currentdate.getMinutes() + ":" +
       currentdate.getSeconds();
     console.log(datetime);
+
+var myarray = [];
+    // getting all the objects in shows collection
+    dpd.shows.get( function (result, err) {
+      if (err) return console.log(err);
+      console.log(result);
+      // store only imageURL string of the objects into array myarray
+      for (var i = 0; i < result.length; i++) {
+        myarray.push(result[i].imageURL); // kinda redundant but whatevs
+        var idiv = document.createElement("div"); // dynamically create a div element
+        if (i == 0) {
+          idiv.className = "carousel-item active"; // assign class it will belong to
+        } else {
+          idiv.className = "carousel-item";
+        }
+        var elem = document.createElement("img"); // dynamically create a img element
+        elem.className = "d-block w-100";
+        elem.src = myarray[i];
+        var ilink = document.createElement("a"); // dynamically create a link element
+        ilink.href = "displayShow.html?id=" + result[i].id;
+        ilink.appendChild(elem); // stuff <img> between <a> </a>
+        idiv.appendChild(ilink); // stuff ^ between <div> </div>
+        document.getElementById("inner").appendChild(idiv); // stuff this code into carousel
+      }
+      console.log(myarray);
+    });
+
   </script>
 </body>
 
