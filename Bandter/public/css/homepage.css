@@ -1,0 +1,29 @@
+.welcome-name {
+  text-align: center;
+}
+
+.welcome-message {
+  margin: 15px 20px;
+  text-align: center;
+}
+
+.instruct-message {
+  margin: 15px 20px;
+  margin-bottom: 100px;
+  padding-left: 15px;
+  text-align: left;
+}
+
+.featured-shows-div {
+  margin: 15px;
+}
+
+.carousel img {
+  height: 700px;
+  width: auto;
+}
+
+.featured-shows {
+  margin: 0 auto;
+  width: 100%;
+}
