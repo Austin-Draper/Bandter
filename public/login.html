@@ -15,12 +15,12 @@
     <h1><strong>Login</strong></h1>
     <form>
       <div class="form-group">
-      <label for="username" class="text-dark">Username:</label>
-      <input type="text" id="username" />
+        <label for="username" class="text-dark">Username:</label>
+        <input type="text" id="username" />
       </div>
       <div class="form-group">
-      <label for="password">Password:</label>
-      <input type="password" id="password" />
+        <label for="password">Password:</label>
+        <input type="password" id="password" />
       </div>
       <br />
       <button type="submit" class="btn btn-primary"><strong>Login</strong></button>
@@ -31,36 +31,7 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <script type="text/javascript">
-
-    $(function() {
-      $("#navbar").load("nav.html");
-    });
-
-    dpd.users.me(function(user) {
-      if (user) {
-        location.href = "/index.html";
-      }
-    });
-
-    $("form").submit(function() {
-      var username = $("#username").val();
-      var password = $("#password").val();
-
-      dpd.users.login({
-        username: username,
-        password: password
-      }, function(session, error) {
-        if (error) {
-          alert(error.message);
-        } else {
-          location.href = "/index.html";
-        }
-      });
-
-      return false;
-    });
-  </script>
+  <script type="text/javascript" src="scripts/login.js"></script>
 </body>
 
 </html>
