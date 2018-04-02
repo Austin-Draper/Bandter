@@ -26,7 +26,7 @@ dpd.shows.get(function(result, err) {
       idiv.className = "carousel-item";
     }
     var elem = document.createElement("img"); // dynamically create a img element
-    elem.className = "d-block w-100";
+    elem.className = "d-block";
     elem.src = myarray[i];
     var ilink = document.createElement("a"); // dynamically create a link element
     ilink.href = "displayShow.html?id=" + result[i].id;
