@@ -12,6 +12,22 @@
       throw new Error("Could not find element with selecotr: " + selector);
     }
   }
+
+  FormHandler.prototype.addInputHandler = function (fn) {
+      console.log('Setting input handler for form');
+      this.$formElement.on('input', '[name="dateTime"]', function (event) {
+        // Event handler code will go here
+        var dateAndTime = event.target.value;
+        var message = '';
+        if (fn(dateAndTime)) {
+        event.target.setCustomValidity('');
+        } else {
+        message = dateAndTime + ' is not an authorized input!'
+        event.target.setCustomValidity(message);
+      }
+      });
+    };
+
   FormHandler.prototype.addSubmitHandler = function(fn) {
     this.$formElement.on("submit", function(event) {
       event.preventDefault();
