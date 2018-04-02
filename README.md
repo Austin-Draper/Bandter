@@ -15,7 +15,7 @@ User Guide:
 
 
 Upon opening Bandter you will be brought to the sites homepage.
-If you have a previous account with Bandter, slick the Login button, otherwise, start by clicking the Sign Up button at the top right corner.
+If you have a previous account with Bandter, click the Login button, otherwise, start by clicking the Sign Up button at the top right corner.
 Once you have signed up, navigate to the Login page and input your login information.
 You will be directed back to the homepage signed into your account.
 
