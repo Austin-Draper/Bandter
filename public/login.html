@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Bandter | Register</title>
+  <title>Bandter | Login</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
@@ -12,21 +12,19 @@
   </div>
 
   <div class="container">
-    <h1>Register</h1>
+    <h1><strong>Login</strong></h1>
     <form>
       <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" />
+      <label for="username" class="text-dark">Username:</label>
+      <input type="text" id="username" />
       </div>
       <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" id="password" />
+      <label for="password">Password:</label>
+      <input type="password" id="password" />
       </div>
-      <div class="form-group">
-        <label for="confirm-password">Confirm Password:</label>
-        <input type="password" id="confirm-password" /><br />
-      </div>
-      <button type="submit" class="btn btn-primary" style="margin-right: 10px;">Sign up</button>
+      <br />
+      <button type="submit" class="btn btn-primary"><strong>Login</strong></button>
+      <a href="/register.html" class="btn btn-default"><strong>Sign Up</strong></a>
     </form>
   </div>
   <script type="text/javascript" src="/dpd.js"></script>
@@ -34,33 +32,31 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script type="text/javascript">
+
     $(function() {
       $("#navbar").load("nav.html");
+    });
+
+    dpd.users.me(function(user) {
+      if (user) {
+        location.href = "/index.html";
+      }
     });
 
     $("form").submit(function() {
       var username = $("#username").val();
       var password = $("#password").val();
-      var confirmPassword = $("#confirm-password").val();
 
-      if (!username) {
-        alert("Username is required");
-      } else if (!password) {
-        alert("Password is required");
-      } else if (password !== confirmPassword) {
-        alert("Passwords do not match");
-      } else {
-        dpd.users.post({
-          username: username,
-          password: password
-        }, function(user, error) {
-          if (error) {
-            alert(JSON.stringify(error));
-          } else {
-            location.href = "/login.html";
-          }
-        });
-      }
+      dpd.users.login({
+        username: username,
+        password: password
+      }, function(session, error) {
+        if (error) {
+          alert(error.message);
+        } else {
+          location.href = "/index.html";
+        }
+      });
 
       return false;
     });

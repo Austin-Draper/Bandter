@@ -2,59 +2,126 @@
 <html>
 
 <head>
-  <title>Bandter login form</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
-  <style type="text/css">
-    body {
-      background: #5bc0de !important;
-    }
-  </style>
-  <style type="text/css">
-    body h1 {
-      color: red;
-    }
-  </style>
+  <title>BANDTER</title>
+  <link type="text/css" rel="stylesheet" href="css/homepage.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
 <body>
-  <div class="container">
-    <h1><strong>Login</strong></h1>
-    <form>
-      <label for="username" class="text-dark"><strong><u>Username:</u></strong></label>
-      <input type="text" id="username" />
-      <label for="password"><strong><u>Password:</u></strong></label>
-      <input type="password" id="password" /><br />
-      <button type="submit" class="btn btn-primary"><strong>Login</strong></button>
-      <a href="/register.html" class="btn btn-default"><strong>Sign Up</strong></a>
-    </form>
+
+  <div class="container-fluid" id="navbar">
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js" charset="utf-8"></script>
+
+  <!-- Just a small message to make it look like a homepage vs just being the image slider -->
+  <div class="welcome-message">
+    <h1>Welcome to Bandter!</h1>
+  </div>
+  <div class="instruct-message">
+    <p>This is a site where bands can solicit feedback on recent shows.</p>
+    <p>Shown below are some feautured shows you can give feedback on.</p>
+    <p>Don't see a certain show? Don't worry, check out <a href="browseShows.html">Browse Shows</a> to see if it's listed there.</p>
+    <p>Otherwise, you can add a show by clicking <a href="addShow.html">Add Show</a>. We'll get around to adding it ASAP!</p>
+  </div>
+
+  <!-- Entire container holding the carousel and the title -->
+  <div class="container featured-shows-div">
+
+    <h4>Featured Shows</h4>
+
+    <div id="featuredShowsCarousel" class="carousel slide featured-shows" data-ride="carousel">
+      <div class="carousel-inner" id="inner">
+        <!-- javascript generated code goes here
+        it will load images from the deployd database -->
+      </div>
+
+      <a class="carousel-control-prev" href="#featuredShowsCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#featuredShowsCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+
+  <div id="test"></div>
+
   <script type="text/javascript" src="/dpd.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script type="text/javascript">
+    $(function() {
+      $("#navbar").load("nav.html");
+    });
+
     dpd.users.me(function(user) {
       if (user) {
-        location.href = "/homepage.html";
+        $(".welcome-name").text("Welcome, " + user.username + "!");
+      } else {
+        //location.href = "/";
       }
     });
 
-    $("form").submit(function() {
-      var username = $("#username").val();
-      var password = $("#password").val();
+    var currentdate = new Date();
+    var datetime = "Last Sync: " + (currentdate.getMonth() + 1) + "/" +
+      currentdate.getDate() + "/" +
+      currentdate.getFullYear() + " @ " +
+      currentdate.getHours() + ":" +
+      currentdate.getMinutes() + ":" +
+      currentdate.getSeconds();
+    console.log(datetime);
 
-      dpd.users.login({
-        username: username,
-        password: password
-      }, function(session, error) {
-        if (error) {
-          alert(error.message);
+var myarray = [];
+    // getting all the objects in shows collection
+    dpd.shows.get( function (result, err) {
+      if (err) return console.log(err);
+      console.log(result);
+      // store only imageURL string of the objects into array myarray
+      for (var i = 0; i < result.length; i++) {
+        myarray.push(result[i].imageURL); // kinda redundant but whatevs
+        var idiv = document.createElement("div"); // dynamically create a div element
+        if (i == 0) {
+          idiv.className = "carousel-item active"; // assign class it will belong to
         } else {
-          location.href = "/homepage.html";
+          idiv.className = "carousel-item";
         }
-      });
-
-      return false;
+        var elem = document.createElement("img"); // dynamically create a img element
+        elem.className = "d-block w-100";
+        elem.src = myarray[i];
+        var ilink = document.createElement("a"); // dynamically create a link element
+        ilink.href = "displayShow.html?id=" + result[i].id;
+        ilink.appendChild(elem); // stuff <img> between <a> </a>
+        idiv.appendChild(ilink); // stuff ^ between <div> </div>
+        document.getElementById("inner").appendChild(idiv); // stuff this code into carousel
+      }
+      console.log(myarray);
     });
+
   </script>
 </body>
 
 </html>
+<!--THERE ARE 2 DATABASES... THIS ONE IS FOR THE COMMENTS DATABASE
+  dpd.comments.post({"user":"foobar","rating":3,"comment":"foobar","datetime":"foobar","showID":"foobar"}, function(result, err) {
+  if(err) return console.log(err);
+  console.log(result, result.id);
+});
+for the stuff above... "user" string is going to be the current user which is dpd.users.me
+rating is any integer between 1 and 5 (1 lowest 5 highest)
+comment is the actual comment string user types out on the shows page
+datetime can be retrieved using the datetime script i wrote at the top of this page
+showID is the unique ID given to each individual show. I can't find a way to search through the database for unique id's so for now the showID will be showName which is a string variable in the "shows" dpd database...
+Matt update your form to make the user input a showName that we can use for showID.
+
+-->
+<!--THIS ONE IS FOR THE SHOWS DATABASE
+dpd.shows.post({"showLinks":"foobar","showName":"foobar"}, function(result, err) {
+  if(err) return console.log(err);
+  console.log(result, result.id);
+});
+for the stuff above... "showLinks" is a string url to the page for a particular showName
+showName is a string which is the name of the show to be listed on the browse shows page
+
+-->

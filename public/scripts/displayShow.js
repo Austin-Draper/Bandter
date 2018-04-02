@@ -74,14 +74,24 @@ function addComment() {
  console.log(usercomment);
  var id = GetURLParameter("id");
  var date = new Date();
+ var username = "";
  var user = dpd.users.me(function(me) {
+
+   if(me.username == null){
+     username = "Anonymous";
+   }
+   else{
+     username = me.username;
+   }
+
+
    dpd.comments.post({
-     "user": me.username,
+     "user": username,
      "rating": 3,
      "comment": usercomment,
      "datetime": date,
      "showID": id
    })
-   displaySingleComment({datetime: date, comment: usercomment, user:me.username});
+   displaySingleComment({datetime: date, comment: usercomment, user: username});
  });
 }
