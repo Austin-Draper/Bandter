@@ -56,14 +56,6 @@
       $("#navbar").load("nav.html");
     });
 
-    dpd.users.me(function(user) {
-      if (user) {
-        $(".welcome-name").text("Welcome, " + user.username + "!");
-      } else {
-        //location.href = "/";
-      }
-    });
-
     var currentdate = new Date();
     var datetime = "Last Sync: " + (currentdate.getMonth() + 1) + "/" +
       currentdate.getDate() + "/" +

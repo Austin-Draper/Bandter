@@ -52,7 +52,9 @@
       });
     });
 
-    $("form").submit(function() {
+    $("form").submit(function(e) {
+      e.preventDefault();
+
       var showName = $("#showName").val();
       var bandsPlaying = $("#bands").val().split(",");
       var location = $("#location").val();
@@ -68,6 +70,7 @@
       }, function(result, err) {
         if (err) return console.log(err);
         console.log(result, result.id);
+        window.location.href = "displayShow.html?id=" + result.id;
       });
     });
 
