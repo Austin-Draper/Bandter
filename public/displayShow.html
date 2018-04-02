@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Bandter | Browse Shows</title>
+  <title>Bandter | Brose Shows</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
@@ -13,6 +13,23 @@
 
   <div class="container" id="displayShow">
   </div>
+
+  <div class="container">
+    <div class="span8">
+      <form>
+        <textarea class="input-xxlarge" placeholder="What's up?" id="example" name="text"></textarea>
+        <div>
+          <button name="data" type="button" onclick="myFunction()">Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+  <div id="node-id"></div>
+
+
 
   <script type="text/javascript" src="/dpd.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -38,6 +55,27 @@
       }
     }
 
+    function myFunction() {
+      var usercomment = $("#example").val();
+      document.getElementById("example").value= "";
+      console.log(usercomment);
+      var id = GetURLParameter("id");
+      var date = new Date();
+      var user = dpd.users.me(function(me) {
+        dpd.comments.post({
+          "user": me.username,
+          "rating": 3,
+          "comment": usercomment,
+          "datetime": date,
+          "showID": id
+        })
+        //console.log(me.username);
+      });
+
+      //console.log(user);
+
+    }
+
     var id = GetURLParameter("id");
 
     console.log(id);
@@ -49,6 +87,21 @@
       $("#displayShow").append("<h1>" + result.showName + "</h1>");
       $("#displayShow").append("<img src='" + result.imageURL + "' alt='Show Image'>");
 
+    });
+    var query = {
+      "showID": id
+    };
+    dpd.comments.get(query, function(result, err) {
+      if (err) return console.log(err);
+      //console.log(result, result.id);
+      console.log(result);
+      $.each(result, function(key, comments) {
+        var node = document.getElementById('node-id');
+        var newNode = document.createElement('p');
+        newNode.appendChild(document.createTextNode(comments.user + ": " + comments.comment + " " + comments.datetime));
+        node.appendChild(newNode);
+
+      })
     });
   </script>
 </body>
