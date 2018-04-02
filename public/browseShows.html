@@ -4,118 +4,40 @@
 <head>
   <title>Bandter | Browse Shows</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/browseShows.css">
 </head>
 
 <body>
-
   <div class="container-fluid" id="navbar">
   </div>
 
-  <div class="container">
-    <h1>Browse Shows</h1>
+  <div class="container" id="showTitle">
+    <h1 class="display-4" align="center">Browse Shows</h1>
+    <div class="row">
+      <input id="toggle-event" type="checkbox" checked data-toggle="toggle" data-on="Future Shows" data-off="Past Shows" data-onstyle="success" data-offstyle="danger">
+      <div class="col-lg-10">
+        <div class="input-group">
+          <input type="text" class="form-control" id="usersSearch" placeholder="Search by Show/Band/Location" autofocus>
+          <span class="input-group-btn">
+      <button class="btn btn-secondary" id="searchButton" type="button">Go!</button>
+    </span>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="container">
-    <table class="container" id="tableOfShows">
-      <tr>
-        <th onclick="sortTable(0)">Show Name</th>
-        <th onclick="sortTable(1)">Bands Playing</th>
-        <th onclick="sortTable(2)">Location</th>
-        <th onclick="sortTable(3)">Date</th>
-      </tr>
-    </table>
+  <!--This gets populated with JS-->
+  <div class="well" id="well">
   </div>
-
 
   <script type="text/javascript" src="/dpd.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <script type="text/javascript">
-    //todo this is currently just a place holder function, we will need to write our own sort functionality to sort by dates correctly
-    //-------------------------------------------------------------
-    //https://www.w3schools.com/howto/howto_js_sort_table.asp
-    function sortTable(n) {
-      var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-      table = document.getElementById("tableOfShows");
-      switching = true;
-      // Set the sorting direction to ascending:
-      dir = "asc";
-      /* Make a loop that will continue until
-      no switching has been done: */
-      while (switching) {
-        // Start by saying: no switching is done:
-        switching = false;
-        rows = table.getElementsByTagName("TR");
-        /* Loop through all table rows (except the
-        first, which contains table headers): */
-        for (i = 1; i < (rows.length - 1); i++) {
-          // Start by saying there should be no switching:
-          shouldSwitch = false;
-          /* Get the two elements you want to compare,
-          one from current row and one from the next: */
-          x = rows[i].getElementsByTagName("TD")[n];
-          y = rows[i + 1].getElementsByTagName("TD")[n];
-          /* Check if the two rows should switch place,
-          based on the direction, asc or desc: */
-          if (dir == "asc") {
-            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-              // If so, mark as a switch and break the loop:
-              shouldSwitch = true;
-              break;
-            }
-          } else if (dir == "desc") {
-            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-              // If so, mark as a switch and break the loop:
-              shouldSwitch = true;
-              break;
-            }
-          }
-        }
-        if (shouldSwitch) {
-          /* If a switch has been marked, make the switch
-          and mark that a switch has been done: */
-          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-          switching = true;
-          // Each time a switch is done, increase this count by 1:
-          switchcount++;
-        } else {
-          /* If no switching has been done AND the direction is "asc",
-          set the direction to "desc" and run the while loop again. */
-          if (switchcount == 0 && dir == "asc") {
-            dir = "desc";
-            switching = true;
-          }
-        }
-      }
-    }
-    //-------------------------------------------------------------
-
-    // set the correct nav button as active
-    $(function() {
-      $("#navbar").load("nav.html", function() {
-        $("#browseShowsNav").addClass('active');
-      });
-    });
-
-    //query deployd and create a table to display all shows in the db
-    dpd.shows.get(function(result, err) {
-      if (err) return console.log(err);
-      //console.log(result, result.id);
-      console.log(result);
-
-      $.each(result, function(key, show) {
-        var date = new Date(show.date);
-        var showRow = document.createElement("tr");
-        $(showRow).append("<td><a href='displayShow.html?id=" + show.id + "'>" + show.showName + "</a></td>");
-        $(showRow).append("<td>" + show.bandsPlaying + "</td>");
-        $(showRow).append("<td>" + show.location + "</td>");
-        $(showRow).append("<td>" + date + "</td>");
-
-        $("#tableOfShows").append(showRow);
-      });
-    });
+  <script type="text/javascript" src="scripts/browseShows.js"></script>
+  <script type="text/javascript" src="scripts/toggle.js">
   </script>
+
 </body>
 
 </html>
