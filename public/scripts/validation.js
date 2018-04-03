@@ -3,9 +3,9 @@
   var App = window.App || {};
 
   var Validation = {
-    isDateAndTime: function (date) {
+    isDateAndTime: function (input) {
 
-      var matches = value.match(/^(\d{2}).(\d{2}).(\d{4}).(\d{2}).(\d{2}).(\d{2})$/);
+      var matches = input.match(/^(\d{2}).(\d{2}).(\d{4}).(\d{2}).(\d{2}).(\d{2})$/);
       if (matches === null) {
         // invalid
         return false;
