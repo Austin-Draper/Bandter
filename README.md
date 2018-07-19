@@ -1,6 +1,13 @@
 # Bandter
 This Applications name is Bandter
 
+![Browse Shows Page Past](https://imgur.com/rrgftAB.png)
+
+![Browse Shows Page Upcoming](https://imgur.com/nXaRrpC.png)
+
+
+![Add Shows Page](https://imgur.com/dubsvct.png)
+
 To use this application, you need to do the following:
 
   1. Open your command line
